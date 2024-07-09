@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+   <meta charset="UTF-8">
+   <script src="https://cdn.tailwindcss.com"></script>
+   <title>rock scissor paper game</title>
+</head>
+
+<body>
+   <div class="flex flex-col justify-center items-center w-screen h-screen  bg-gray-200 gap-20">
+
+      <div class="flex flex-row justify-center items-center gap-12">
+
+         <div id="UserMove" class="rounded-3xl bg-blue-300 shadow-2xl w-36 p-4">
+            <img src="search-outline.512x512.png" alt="You" />
+            <div class="text-center text-[30px] font-semibold" id="userText"></div>
+         </div>
+
+         <div id="vs" class="rounded-full w-16 shadow-2xl"><img src="vs.svg" alt="vs" /></div>
+
+         <div id="computerMove" class="rounded-3xl bg-red-300 shadow-2xl w-36 p-4">
+            <img src="search-outline.512x512.png" alt="Computer" />
+            <div class="text-center text-[30px] font-semibold" id="compText"></div>
+         </div>
+      </div>
+
+
+      <div class="flex flex-row justify-center items-center gap-8">
+         <div id="Display" class="text-4xl "></div>
+      </div>
+
+      <div class="flex flex-row justify-center items-center gap-8">
+         <div id="rockClick"
+            class="rounded-3xl p-4 w-40 bg-gray-100 curser-pointer shadow-xl hover:border-4 hover:border-blue-500 hover:scale-110">
+            <img src="rock-hand.svg" alt="Rock">
+            <div class="text-center text-[30px] font-semibold"> Rock</div>
+         </div>
+
+         <div id="scissorClick"
+            class="rounded-3xl p-4 w-40 bg-gray-100 curser-pointer shadow-xl hover:border-4 hover:border-blue-500 hover:scale-110">
+            <img src="scissors-hand.svg" alt="Scissor">
+            <div class="text-center text-[30px] font-semibold"> Scisser</div>
+         </div>
+
+         <div id="paperClick"
+            class="rounded-3xl p-4 w-40 bg-gray-100 curser-pointer shadow-xl hover:border-4 hover:border-blue-500 hover:scale-110">
+            <img src="paper-hand.svg" alt="Paper">
+            <div class="text-center text-[30px] font-semibold"> Paper</div>
+         </div>
+      </div>
+
+
+   </div>
+   <script>
+      var ComputerChoose;
+      var UserChoose;
+      var temp;
+      var user = document.getElementById("userText");
+      var comp = document.getElementById("compText");
+      var yourMove = document.getElementById("UserMove");
+      var ComMove = document.getElementById("computerMove");
+      var RockSelector = document.getElementById("rockClick");
+      var ScissorSelector = document.getElementById("scissorClick");
+      var PaperSelector = document.getElementById("paperClick");
+      var Show = document.getElementById("Display");
+
+      function computerTurn(Event) {
+         var value = Math.random() * 3;
+         if (value < 1) {
+            ComputerChoose = "Rock";
+            temp = RockSelector.innerHTML;
+         } else if (value < 2) {
+            ComputerChoose = "Scissor";
+            temp = ScissorSelector.innerHTML;
+         } else {
+            ComputerChoose = "Paper";
+            temp = PaperSelector.innerHTML;
+         }
+         console.log(ComputerChoose);
+         // let a = ComMove.children[1]
+         ComMove.innerHTML = temp;
+         // comp.innerHTML = ComputerChoose;
+         return;
+      }
+
+      function WinFinder(value1, value2) {
+         if (value1 == value2) {
+            Show.innerText = "game tie";
+         } else if (value1 == "Rock" && value2 == "Paper") {
+            win("Computer");
+         } else if (value1 == "Scissor" && value2 == "Rock") {
+            win("Computer");
+         } else if (value1 == "Paper" && value2 == "Scissor") {
+            win("Computer");
+         } else if (value1 == "Paper" && value2 == "Rock") {
+            win("You");
+         } else if (value1 == "Scissor" && value2 == "Paper") {
+            win("You");
+         } else if (value1 == "Rock" && value2 == "Scissor") {
+            win("You");
+         } else {
+            return;
+         }
+      }
+
+      function win(print) {
+         Show.innerText = `${print} win game`;
+      }
+
+
+
+      function userDecision(Event) {
+         UserChoose = Event.target.alt;
+         user.innerText = UserChoose;
+         let abc = event.target.getAttribute("src");
+         yourMove.getElementsByTagName("img")[0].setAttribute("src", abc);
+
+         // console.log(abc);
+
+
+         computerTurn();
+         WinFinder(UserChoose, ComputerChoose);
+
+      }
+      RockSelector.addEventListener("click", userDecision);
+      ScissorSelector.addEventListener("click", userDecision);
+      PaperSelector.addEventListener("click", userDecision);
+   </script>
+
+</body>
+
+</html>
